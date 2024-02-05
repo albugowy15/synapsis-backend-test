@@ -1,15 +1,43 @@
 package handler
 
 import (
-	"fmt"
-	"html"
 	"net/http"
 )
 
 func Register(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, Register %q", html.EscapeString(r.URL.Path))
+	switch r.Method {
+	case http.MethodGet:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+
+	case http.MethodPost:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+
+	case http.MethodPut:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+
+	case http.MethodDelete:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+
+	default:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello, Login %q", html.EscapeString(r.URL.Path))
+	switch r.Method {
+	case http.MethodGet:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+
+	case http.MethodPost:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+
+	case http.MethodPut:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+
+	case http.MethodDelete:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+
+	default:
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+	}
 }

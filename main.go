@@ -28,5 +28,6 @@ func main() {
 	http.HandleFunc("/v1/cart", handler.Cart)
 	http.HandleFunc("/v1/carts/checkout", handler.Checkout)
 
+	log.Println("Server is running on port 8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
