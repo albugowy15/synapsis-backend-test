@@ -7,11 +7,11 @@ END;
 $$ LANGUAGE plpgsql;
 
 CREATE TABLE "users" (
-  "id" bigint PRIMARY KEY,
+  "id" bigserial PRIMARY KEY,
   "username" varchar(30) UNIQUE,
   "email" varchar(50) UNIQUE,
   "fullname" varchar(100),
-  "password" varchar(16),
+  "password" varchar(128),
   "address" varchar(200),
   "phone_number" varchar(14) UNIQUE,
   "created_at" TIMESTAMPTZ DEFAULT NOW() NOT NULL,
@@ -23,7 +23,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
 CREATE TABLE "shopping_carts" (
-  "id" bigint PRIMARY KEY,
+  "id" bigserial PRIMARY KEY,
   "user_id" bigint NOT NULL,
   "created_at" TIMESTAMPTZ DEFAULT NOW() NOT NULL,
   "updated_at" TIMESTAMPTZ DEFAULT NOW() NOT NULL
@@ -34,7 +34,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
 CREATE TABLE "items" (
-  "id" bigint PRIMARY KEY,
+  "id" bigserial PRIMARY KEY,
   "quantity" smallint,
   "shopping_cart_id" bigint,
   "product_id" bigint,
@@ -47,7 +47,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
 CREATE TABLE "products" (
-  "id" bigint PRIMARY KEY,
+  "id" bigserial PRIMARY KEY,
   "name" varchar(100) NOT NULL,
   "description" text,
   "price" numeric(10, 2) NOT NULL,
@@ -61,7 +61,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
 CREATE TABLE "categories" (
-  "id" bigint PRIMARY KEY,
+  "id" bigserial PRIMARY KEY,
   "name" varchar(20) NOT NULL,
   "description" varchar(150),
   "created_at" TIMESTAMPTZ DEFAULT NOW() NOT NULL,
@@ -73,7 +73,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
 CREATE TABLE "products_categories" (
-  "id" bigint PRIMARY KEY,
+  "id" bigserial PRIMARY KEY,
   "product_id" bigint,
   "category_id" bigint,
   "created_at" TIMESTAMPTZ DEFAULT NOW() NOT NULL,
@@ -85,7 +85,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
 CREATE TABLE "payment_methods" (
-  "id" int PRIMARY KEY,
+  "id" serial PRIMARY KEY,
   "type" char(20),
   "merchant" varchar(30),
   "fee" numeric(10, 2),
@@ -98,7 +98,7 @@ FOR EACH ROW
 EXECUTE PROCEDURE trigger_set_timestamp();
 
 CREATE TABLE "payment_transactions" (
-  "id" bigint PRIMARY KEY,
+  "id" bigserial PRIMARY KEY,
   "total_product_price" numeric(10, 2),
   "tax" numeric(10, 2),
   "total_price" numeric(10, 2),
