@@ -1,10 +1,7 @@
 package main
 
 import (
-	"log"
-	"net/http"
-
-	"github.com/albugowy15/synapsis-backend-test/handler"
+	"github.com/albugowy15/synapsis-backend-test/internal/api"
 )
 
 /*
@@ -19,15 +16,5 @@ import (
  */
 
 func main() {
-	http.HandleFunc("/v1/auth/register", handler.Register)
-	http.HandleFunc("/v1/auth/login", handler.Login)
-
-	http.HandleFunc("/v1/products", handler.Products)
-
-	http.HandleFunc("/v1/carts", handler.Carts)
-	http.HandleFunc("/v1/cart", handler.Cart)
-	http.HandleFunc("/v1/carts/checkout", handler.Checkout)
-
-	log.Println("Server is running on port 8080...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	api.Run(".")
 }
