@@ -13,3 +13,8 @@ type Cart struct {
 	ItemPrice    float64 `db:"item_price" json:"item_price"`
 	Quantity     int64   `db:"quantity" json:"quantity"`
 }
+
+type AddCartRequest struct {
+	ProductId int64 `json:"product_id"`
+	Quantity  int64 `json:"quantity"`
+}

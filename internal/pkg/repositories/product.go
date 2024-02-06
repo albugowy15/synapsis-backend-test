@@ -1,9 +1,6 @@
 package repositories
 
 import (
-	"database/sql"
-	"fmt"
-
 	"github.com/albugowy15/synapsis-backend-test/internal/pkg/db"
 	"github.com/albugowy15/synapsis-backend-test/internal/pkg/models"
 )
@@ -72,7 +69,7 @@ func (r *ProductRepository) All() ([]models.Product, error) {
 	return products, nil
 }
 
-func (r *ProductRepository) GetById(id string) (models.Product, error) {
+func (r *ProductRepository) GetById(id int64) (models.Product, error) {
 	var product models.Product
 	if err := db.
 		GetDB().
@@ -80,9 +77,6 @@ func (r *ProductRepository) GetById(id string) (models.Product, error) {
 			"SELECT id, name, description, price, stock FROM products WHERE id = $1",
 			id,
 		).Scan(&product); err != nil {
-		if err == sql.ErrNoRows {
-			return product, fmt.Errorf("product with id %s not found", id)
-		}
 		return product, err
 	}
 	return product, nil

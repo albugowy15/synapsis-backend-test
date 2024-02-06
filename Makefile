@@ -10,4 +10,7 @@ migrate-fix:
 seed:
 	go run cmd/seeder.go
 
-.PHONY: migrate-up migrate-down migrate-fix seed
+build:
+	go build -o tmp/main main.go
+
+.PHONY: migrate-up migrate-down migrate-fix seed build
