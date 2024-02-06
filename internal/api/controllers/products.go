@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"encoding/json"
 	"log"
 	"net/http"
 
 	"github.com/albugowy15/synapsis-backend-test/internal/pkg/models"
 	"github.com/albugowy15/synapsis-backend-test/internal/pkg/repositories"
+	"github.com/albugowy15/synapsis-backend-test/internal/pkg/utils"
 )
 
 // Get All Products
@@ -21,32 +21,33 @@ func Products(w http.ResponseWriter, r *http.Request) {
 	s := repositories.GetProductRepository()
 	query := r.URL.Query()
 	categoryParam := query.Get("category")
-	var products []models.Product
 	var err error
 	if categoryParam != "" {
+		var products []models.Product
 		products, err = s.GetByCategory(categoryParam)
 		if err != nil {
 			log.Printf("Error find products with category %s: %v", categoryParam, err)
-			http.Error(w, err.Error(), http.StatusNotFound)
+			utils.SendJsonError(w, err.Error(), http.StatusNotFound)
 			return
 		}
+		response := models.ArrayResponse{
+			TotalItems: len(products),
+			Data:       products,
+		}
+		utils.SendJsonSuccess(w, response, http.StatusOK)
+		return
 	}
 
+	var products []models.Product
 	products, err = s.All()
 	if err != nil {
 		log.Printf("Error get all products: %v", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+		utils.SendJsonError(w, "Internal Server Error", http.StatusInternalServerError)
 		return
 	}
-
-	jsonResponse, err := json.Marshal(products)
-	if err != nil {
-		log.Printf("Error marshal response json: %v", err)
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+	response := models.ArrayResponse{
+		TotalItems: len(products),
+		Data:       products,
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write(jsonResponse)
-	return
+	utils.SendJsonSuccess(w, response, http.StatusOK)
 }

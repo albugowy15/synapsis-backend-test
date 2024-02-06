@@ -13,6 +13,11 @@ definitions:
       stock:
         type: integer
     type: object
+  models.UserRegisterResponse:
+    properties:
+      id:
+        type: integer
+    type: object
 host: localhost:8080
 info:
   contact:
@@ -27,6 +32,23 @@ info:
   title: Swagger Example API
   version: "1.0"
 paths:
+  /auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/models.UserRegisterResponse'
+            type: array
+      summary: Register user
+      tags:
+      - auth v1
   /products:
     get:
       consumes:
