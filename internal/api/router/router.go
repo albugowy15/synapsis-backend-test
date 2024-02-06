@@ -1,11 +1,13 @@
 package router
 
 import (
-	"fmt"
-	"log"
-	"net/http"
-
 	"github.com/albugowy15/synapsis-backend-test/internal/api/controllers"
+
+	_ "github.com/albugowy15/synapsis-backend-test/docs"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
+	"github.com/go-chi/cors"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 /*
@@ -18,18 +20,33 @@ import (
 * DELETE /v1/shopping_cart
 * POST /v1/shopping_carts/checkout
  */
-func Setup() {
-	http.HandleFunc("/v1/auth/register", controllers.Register)
-	http.HandleFunc("/v1/auth/login", controllers.Login)
+func Setup() *chi.Mux {
+	r := chi.NewRouter()
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: false,
+		MaxAge:           300,
+	}))
+	r.Use(middleware.RequestID)
+	r.Use(middleware.Logger)
+	r.Use(middleware.Recoverer)
+	r.Use(middleware.Compress(5, "text/html", "application/json"))
 
-	http.HandleFunc("/v1/products", controllers.Products)
+	r.Get("/swagger/*", httpSwagger.Handler(
+		httpSwagger.URL("http://localhost:8080/swagger/doc.json"),
+	))
 
-	http.HandleFunc("/v1/carts", controllers.Carts)
-	http.HandleFunc("/v1/cart", controllers.Cart)
-	http.HandleFunc("/v1/carts/checkout", controllers.Checkout)
-}
+	r.Get("/v1/products", controllers.Products)
 
-func Run(port string) {
-	log.Printf("Server is running on port %s...\n", port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", port), nil))
+	r.Post("/v1/auth/register", controllers.Register)
+	r.Post("/v1/auth/login", controllers.Login)
+
+	r.Get("/v1/carts", controllers.Carts)
+	r.Post("/v1/cart", controllers.Cart)
+	r.Post("/v1/carts/checkout", controllers.Checkout)
+
+	return r
 }
