@@ -12,6 +12,7 @@ type Configuration struct {
 	DBDriver string `mapstructure:"DB_DRIVER"`
 	DBSource string `mapstructure:"DB_SOURCE"`
 	Port     string `mapstructure:"PORT"`
+	Secret   string `mapstructure:"SECRET"`
 }
 
 func LoadConfig(path string) {

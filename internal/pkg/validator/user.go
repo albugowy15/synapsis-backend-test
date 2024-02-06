@@ -21,12 +21,15 @@ func ValidateUsername(username string) error {
 		return fmt.Errorf("username must be only contains uppercase or lowercase letter and number with no space")
 	}
 
+	return nil
+}
+
+func ValidateUniqueUsername(username string) error {
 	s := repositories.GetUserRepository()
 	_, err := s.GetByUsername(username)
 	if err == nil {
 		return fmt.Errorf("username already exist")
 	}
-
 	return nil
 }
 
@@ -91,11 +94,26 @@ func ValidateRegisterBody(body models.UserRegisterRequest) error {
 		return err
 	}
 
+	if err := ValidateUniqueUsername(body.Username); err != nil {
+		return err
+	}
+
 	if err := ValidateEmail(body.Email); err != nil {
 		return err
 	}
 
 	if err := ValidateFullname(body.Fullname); err != nil {
+		return err
+	}
+
+	if err := ValidatePassword(body.Password); err != nil {
+		return err
+	}
+	return nil
+}
+
+func ValidateLoginRequest(body models.UserLoginRequest) error {
+	if err := ValidateUsername(body.Username); err != nil {
 		return err
 	}
 

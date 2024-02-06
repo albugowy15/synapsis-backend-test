@@ -73,7 +73,7 @@ func SeedUser(db *sql.DB) error {
 	}
 	defer stmt.Close()
 
-	userPassword := hashPassword("password1forAll")
+	userPassword := hashPassword("password1for&All")
 	for _, user := range users {
 		username := createUsername(user.Fullname)
 		email := createEmail(username)

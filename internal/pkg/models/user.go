@@ -20,3 +20,8 @@ type UserRegisterRequest struct {
 type UserRegisterResponse struct {
 	Message string `json:"message"`
 }
+
+type UserLoginRequest struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
+}
