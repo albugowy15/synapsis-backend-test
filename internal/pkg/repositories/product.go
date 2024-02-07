@@ -76,7 +76,7 @@ func (r *ProductRepository) GetById(id int64) (models.Product, error) {
 		QueryRow(
 			"SELECT id, name, description, price, stock FROM products WHERE id = $1",
 			id,
-		).Scan(&product); err != nil {
+		).Scan(&product.ID, &product.Name, &product.Description, &product.Price, &product.Stock); err != nil {
 		return product, err
 	}
 	return product, nil

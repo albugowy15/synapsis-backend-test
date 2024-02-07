@@ -17,7 +17,7 @@ import (
 // @Produce json
 // @Success 200 {array} models.Product
 // @Router /products [get]
-func Products(w http.ResponseWriter, r *http.Request) {
+func GetProducts(w http.ResponseWriter, r *http.Request) {
 	s := repositories.GetProductRepository()
 	query := r.URL.Query()
 	categoryParam := query.Get("category")

@@ -1,18 +1,19 @@
 package config
 
 import (
-	"log"
-
 	"github.com/spf13/viper"
 )
 
 var Config *Configuration
 
 type Configuration struct {
-	DBDriver string `mapstructure:"DB_DRIVER"`
-	DBSource string `mapstructure:"DB_SOURCE"`
-	Port     string `mapstructure:"PORT"`
-	Secret   string `mapstructure:"SECRET"`
+	Environment  string `mapstructure:"ENVIRONMENT"`
+	DBDriver     string `mapstructure:"DB_DRIVER"`
+	DBSource     string `mapstructure:"DB_SOURCE"`
+	MigrationURL string `mapstructure:"MIGRATION_URL"`
+	RedisAddress string `mapstructure:"REDIS_ADDRESS"`
+	Port         string `mapstructure:"PORT"`
+	Secret       string `mapstructure:"SECRET"`
 }
 
 func LoadConfig(path string) {
@@ -25,12 +26,12 @@ func LoadConfig(path string) {
 
 	err := viper.ReadInConfig()
 	if err != nil {
-		log.Fatalf("Error reading config: %v", err)
+		return
 	}
 
 	err = viper.Unmarshal(&config)
 	if err != nil {
-		log.Fatalf("Error unmarshal config: %v", err)
+		return
 	}
 
 	Config = config

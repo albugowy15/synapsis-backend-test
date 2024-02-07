@@ -12,17 +12,6 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-/*
-* Avaliable endpoints
-* POST /v1/auth/register
-* GET /v1/auth/login
-* GET /v1/products?category
-* POST /v1/shopping_cart
-* GET /v1/shopping_carts
-* DELETE /v1/shopping_cart
-* POST /v1/shopping_carts/checkout
- */
-
 func Setup() *chi.Mux {
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
@@ -42,7 +31,7 @@ func Setup() *chi.Mux {
 		httpSwagger.URL("http://localhost:8080/swagger/doc.json"),
 	))
 
-	r.Get("/v1/products", controllers.Products)
+	r.Get("/v1/products", controllers.GetProducts)
 
 	r.Post("/v1/auth/login", controllers.Login)
 	r.Post("/v1/auth/register", controllers.Register)
@@ -50,9 +39,13 @@ func Setup() *chi.Mux {
 	r.Group(func(r chi.Router) {
 		r.Use(jwtauth.Verifier(utils.GetAuth()))
 		r.Use(jwtauth.Authenticator)
-		r.Get("/v1/carts", controllers.Carts)
-		r.Post("/v1/cart", controllers.Cart)
+		r.Get("/v1/carts", controllers.GetCarts)
+		r.Post("/v1/carts", controllers.AddCart)
+		r.Delete("/v1/carts/{product_id}", controllers.DeleteCart)
 		r.Post("/v1/carts/checkout", controllers.Checkout)
+
+		r.Get("/v1/transactions", controllers.GetTransactions)
+		r.Get("/v1/transactions/{transaction_id}", controllers.GetTransactionById)
 	})
 	return r
 }

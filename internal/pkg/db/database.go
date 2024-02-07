@@ -23,7 +23,7 @@ func SetupDB() {
 
 	db, err := sql.Open(configuration.DBDriver, configuration.DBSource)
 	if err != nil {
-		log.Fatalf("Error create db connection: %v", err)
+		log.Printf("Error create db connection: %v", err)
 	}
 	db.SetMaxIdleConns(5)
 	db.SetMaxOpenConns(5)

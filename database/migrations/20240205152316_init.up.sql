@@ -86,7 +86,7 @@ EXECUTE PROCEDURE trigger_set_timestamp();
 
 CREATE TABLE "payment_methods" (
   "id" serial PRIMARY KEY,
-  "type" char(20),
+  "type" varchar(20),
   "merchant" varchar(30),
   "fee" numeric(10, 2),
   "created_at" TIMESTAMPTZ DEFAULT NOW() NOT NULL,
@@ -103,7 +103,7 @@ CREATE TABLE "payment_transactions" (
   "tax" numeric(10, 2),
   "total_price" numeric(10, 2),
   "payment_method_id" int,
-  "status" char(10),
+  "status"varchar(10),
   "qr_code" varchar(100),
   "virtual_account" varchar(30),
   "account_number" varchar(30),
