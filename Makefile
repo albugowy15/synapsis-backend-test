@@ -1,13 +1,13 @@
-DB_URL=postgresql://root:secret@localhost:5432/synapsis_db?sslmode=disable
+DB_URL=postgres://postgres:postgres@localhost:5432/synapsis_db?sslmode=disable
 
 network:
 	docker network create synapsis-network
 
 postgres:
-	docker run --name postgres --network synapsis-network -p 5432:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:14-alpine
+	docker run --name postgres --network synapsis-network -p 5432:5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -d postgres:14-alpine
 
 createdb:
-	docker exec -it postgres createdb --username=root --owner=root synapsis_db
+	docker exec -it postgres createdb --username=postgres --owner=postgres synapsis_db
 
 dropdb:
 	docker exec -it postgres dropdb synapsis_db
@@ -19,7 +19,7 @@ migrate_down:
 	migrate -path database/migrations -database "$(DB_URL)" -verbose down
 
 migrate_fix:
-	migrate -path database/migrations -database postgresql://postgres:postgres@localhost:5432/synapsis_db force ${VERSION}
+	migrate -path database/migrations -database postgres://postgres:postgres@localhost:5432/synapsis_db force ${VERSION}
 
 new_migration:
 	migrate create -ext sql -dir database/migrations -seq $(name)
@@ -30,6 +30,12 @@ seed:
 test:
 	go test -v -cover -short ./...
 
+build_api:
+	docker build -t synapsis-backend-test .
+
+server_api:
+	docker run --name synapsis-backend-test --network synapsis-network -p 8080:8080 -e DB_SOURCE="postgres://postgres:postgres@postgres:5432/synapsis_db?sslmode=disable" synapsis-backend-test 
+
 server:
 	go run main.go
 
@@ -39,4 +45,4 @@ redis:
 build:
 	go build -o tmp/main main.go
 
-.PHONY: network postgres createdb dropdb migrate_up migrate_down migrate_fix nem_migration seed test server redis build
+.PHONY: network postgres createdb dropdb migrate_up migrate_down migrate_fix nem_migration seed test build_api server_api server redis build
