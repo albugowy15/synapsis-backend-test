@@ -9,11 +9,10 @@ const docTemplate = `{
     "info": {
         "description": "{{escape .Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "name": "Mohamad Kholid Bughowi",
+            "url": "https://bughowi.com",
+            "email": "kholidbughowi@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -368,6 +367,14 @@ const docTemplate = `{
                     "products v1"
                 ],
                 "summary": "Get all products information of filter with category",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Filter by category",
+                        "name": "category",
+                        "in": "header"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -671,11 +678,11 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:8080",
+	Host:             "",
 	BasePath:         "/v1",
 	Schemes:          []string{},
-	Title:            "Swagger Example API",
-	Description:      "This is a sample server Petstore server.",
+	Title:            "Synapsis API Documentation",
+	Description:      "This is a swagger documentation for Synapsis API Backend Test.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 	LeftDelim:        "{{",

@@ -14,6 +14,7 @@ import (
 // @Summary Get all products information of filter with category
 // @Description Get all products information of filter with category
 // @Accept json
+// @Param category header string false "Filter by category"
 // @Produce json
 // @Success 200 {array} models.Product
 // @Success 400 {object} models.ErrorResponse

@@ -96,18 +96,16 @@ definitions:
       username:
         type: string
     type: object
-host: localhost:8080
 info:
   contact:
-    email: support@swagger.io
-    name: API Support
-    url: http://www.swagger.io/support
-  description: This is a sample server Petstore server.
+    email: kholidbughowi@gmail.com
+    name: Mohamad Kholid Bughowi
+    url: https://bughowi.com
+  description: This is a swagger documentation for Synapsis API Backend Test.
   license:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
-  title: Swagger Example API
+  title: Synapsis API Documentation
   version: "1.0"
 paths:
   /auth/login:
@@ -335,6 +333,11 @@ paths:
       consumes:
       - application/json
       description: Get all products information of filter with category
+      parameters:
+      - description: Filter by category
+        in: header
+        name: category
+        type: string
       produces:
       - application/json
       responses:

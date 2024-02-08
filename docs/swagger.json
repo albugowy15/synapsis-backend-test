@@ -1,13 +1,12 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample server Petstore server.",
-        "title": "Swagger Example API",
-        "termsOfService": "http://swagger.io/terms/",
+        "description": "This is a swagger documentation for Synapsis API Backend Test.",
+        "title": "Synapsis API Documentation",
         "contact": {
-            "name": "API Support",
-            "url": "http://www.swagger.io/support",
-            "email": "support@swagger.io"
+            "name": "Mohamad Kholid Bughowi",
+            "url": "https://bughowi.com",
+            "email": "kholidbughowi@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -15,7 +14,6 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:8080",
     "basePath": "/v1",
     "paths": {
         "/auth/login": {
@@ -362,6 +360,14 @@
                     "products v1"
                 ],
                 "summary": "Get all products information of filter with category",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Filter by category",
+                        "name": "category",
+                        "in": "header"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "OK",
