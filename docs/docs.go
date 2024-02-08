@@ -584,7 +584,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "payment_method": {
                     "$ref": "#/definitions/models.PaymentMethod"

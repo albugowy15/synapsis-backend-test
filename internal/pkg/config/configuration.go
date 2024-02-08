@@ -7,6 +7,7 @@ import (
 var Config *Configuration
 
 type Configuration struct {
+	ApiUrl       string `mapstructure:"API_URL"`
 	Environment  string `mapstructure:"ENVIRONMENT"`
 	DBDriver     string `mapstructure:"DB_DRIVER"`
 	DBSource     string `mapstructure:"DB_SOURCE"`

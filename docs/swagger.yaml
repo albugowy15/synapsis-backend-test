@@ -44,7 +44,7 @@ definitions:
       account_number:
         type: string
       id:
-        type: string
+        type: integer
       payment_method:
         $ref: '#/definitions/models.PaymentMethod'
       qr_code:

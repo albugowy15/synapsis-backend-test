@@ -3,7 +3,6 @@ package db
 import (
 	"database/sql"
 	"log"
-	"time"
 
 	"github.com/albugowy15/synapsis-backend-test/internal/pkg/config"
 	_ "github.com/lib/pq"
@@ -25,9 +24,6 @@ func SetupDB() {
 	if err != nil {
 		log.Printf("Error create db connection: %v", err)
 	}
-	db.SetMaxIdleConns(5)
-	db.SetMaxOpenConns(5)
-	db.SetConnMaxLifetime(time.Duration(100) * time.Second)
 	DB = db
 }
 

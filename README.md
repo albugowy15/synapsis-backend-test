@@ -58,49 +58,55 @@ For more detailed documentation on each endpoint, including request and response
 
 ### Steps
 
-1. Create docker network
+1. Copy app configuration
+
+```sh
+cp app.env.example app.env
+```
+
+2. Create docker network
    Before running the application, create a Docker network to ensure proper communication between containers.
 
 ```sh
 make network
 ```
 
-2. Pull and Run PostgreSQL Container
+3. Pull and Run PostgreSQL Container
    Pull the PostgreSQL Docker image and run it as a container.
 
 ```sh
 make postgres
 ```
 
-3. Create database `synapsis_db`
+4. Create database `synapsis_db`
    Use the following command to create the PostgreSQL database named `synapsis_db`.
 
 ```sh
 make createdb
 ```
 
-4. Run Database Migration
+5. Run Database Migration
    Perform database migration to set up the schema.
 
 ```sh
 make migrate_up
 ```
 
-5. Seed Database
+6. Seed Database
    Populate the database with initial data (if applicable).
 
 ```sh
 make seed
 ```
 
-6. Build the API Image
+7. Build the API Image
    Build the Docker image for the API.
 
 ```sh
 make build_api
 ```
 
-7. Run the API Container
+8. Run the API Container
    Launch the Docker container for the API.
 
 ```sh

@@ -2,6 +2,7 @@ package router
 
 import (
 	"github.com/albugowy15/synapsis-backend-test/internal/api/controllers"
+	"github.com/albugowy15/synapsis-backend-test/internal/pkg/config"
 	"github.com/albugowy15/synapsis-backend-test/internal/pkg/utils"
 
 	_ "github.com/albugowy15/synapsis-backend-test/docs"
@@ -27,8 +28,9 @@ func Setup() *chi.Mux {
 		MaxAge:           300,
 	}))
 
+	conf := config.GetConfig()
 	r.Get("/swagger/*", httpSwagger.Handler(
-		httpSwagger.URL("http://localhost:8080/swagger/doc.json"),
+		httpSwagger.URL(conf.ApiUrl+"/swagger/doc.json"),
 	))
 
 	r.Get("/v1/products", controllers.GetProducts)
