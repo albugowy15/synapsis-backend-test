@@ -18,9 +18,12 @@ import (
 // @Summary Register user
 // @Description Register a new user
 // @Accept json
-// @Param q body models.UserRegisterRequest
+// @Param message body models.UserRegisterRequest true "Register request"
 // @Produce json
-// @Success 201 {object} models.UserRegisterResponse
+// @Success 201 {object} models.MessageResponse
+// @Success 400 {object} models.ErrorResponse
+// @Success 404 {object} models.ErrorResponse
+// @Success 500 {object} models.ErrorResponse
 // @Router /auth/register [post]
 func Register(w http.ResponseWriter, r *http.Request) {
 	var body models.UserRegisterRequest
@@ -61,6 +64,18 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}, http.StatusCreated)
 }
 
+// User login
+// @Tags auth v1
+// @Summary User login
+// @Description User login with username and password
+// @Accept json
+// @Param message body models.UserLoginRequest true "Login Request"
+// @Produce json
+// @Success 200 {object} models.TokenResponse
+// @Success 400 {object} models.ErrorResponse
+// @Success 404 {object} models.ErrorResponse
+// @Success 500 {object} models.ErrorResponse
+// @Router /auth/login [post]
 func Login(w http.ResponseWriter, r *http.Request) {
 	var body models.UserLoginRequest
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {

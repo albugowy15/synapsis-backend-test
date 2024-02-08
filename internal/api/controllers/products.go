@@ -16,6 +16,9 @@ import (
 // @Accept json
 // @Produce json
 // @Success 200 {array} models.Product
+// @Success 400 {object} models.ErrorResponse
+// @Success 404 {object} models.ErrorResponse
+// @Success 500 {object} models.ErrorResponse
 // @Router /products [get]
 func GetProducts(w http.ResponseWriter, r *http.Request) {
 	s := repositories.GetProductRepository()

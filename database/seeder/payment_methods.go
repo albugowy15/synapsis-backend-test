@@ -13,17 +13,17 @@ type PaymentMethodSeed struct {
 
 var paymentMethods = []PaymentMethodSeed{
 	{
-		Type:     "TRANSFER",
+		Type:     "MANUAL_TRANSFER",
 		Merchant: "BNI",
 		Fee:      3000,
 	},
 	{
-		Type:     "TRANSFER",
+		Type:     "MANUAL_TRANSFER",
 		Merchant: "Mandiri",
 		Fee:      3000,
 	},
 	{
-		Type:     "TRANSFER",
+		Type:     "MANUAL_TRANSFER",
 		Merchant: "BRI",
 		Fee:      3000,
 	},
@@ -46,6 +46,21 @@ var paymentMethods = []PaymentMethodSeed{
 		Type:     "QRIS",
 		Merchant: "qris",
 		Fee:      500,
+	},
+	{
+		Type:     "VA_TRANSFER",
+		Merchant: "BNI",
+		Fee:      2000,
+	},
+	{
+		Type:     "VA_TRANSFER",
+		Merchant: "Mandiri",
+		Fee:      2000,
+	},
+	{
+		Type:     "VA_TRANSFER",
+		Merchant: "BRI",
+		Fee:      2000,
 	},
 }
 

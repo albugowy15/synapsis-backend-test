@@ -5,6 +5,14 @@ type ArrayResponse struct {
 	TotalItems int `json:"total_items"`
 }
 
+type MessageResponse struct {
+	Message string `json:"message"`
+}
+
+type TokenResponse struct {
+	Token string `json:"token"`
+}
+
 type ErrorResponse struct {
 	Error string `json:"error"`
 }

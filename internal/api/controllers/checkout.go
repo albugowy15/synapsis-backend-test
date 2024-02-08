@@ -11,6 +11,19 @@ import (
 	"github.com/albugowy15/synapsis-backend-test/internal/pkg/utils"
 )
 
+// Checkout cart
+// @Tags carts v1
+// @Summary Checkout cart
+// @Description Checkout all product in cart and create transaction
+// @Accept json
+// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
+// @Param message body models.CheckoutRequest true "choouse payment method when checkout"
+// @Produce json
+// @Success 201 {object} models.MessageResponse
+// @Success 400 {object} models.ErrorResponse
+// @Success 404 {object} models.ErrorResponse
+// @Success 500 {object} models.ErrorResponse
+// @Router /carts/checkout [post]
 func Checkout(w http.ResponseWriter, r *http.Request) {
 	userId, err := utils.GetJwtClaim(r)
 	if err != nil {

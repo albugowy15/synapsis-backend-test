@@ -15,6 +15,18 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+// Get all products in cart
+// @Tags carts v1
+// @Summary Get all products in cart
+// @Description Get all products in cart
+// @Accept json
+// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
+// @Produce json
+// @Success 200 {object} models.ArrayResponse
+// @Success 400 {object} models.ErrorResponse
+// @Success 404 {object} models.ErrorResponse
+// @Success 500 {object} models.ErrorResponse
+// @Router /carts [get]
 func GetCarts(w http.ResponseWriter, r *http.Request) {
 	userId, err := utils.GetJwtClaim(r)
 	if err != nil {
@@ -36,6 +48,19 @@ func GetCarts(w http.ResponseWriter, r *http.Request) {
 	utils.SendJsonSuccess(w, response, http.StatusOK)
 }
 
+// Add product to cart
+// @Tags carts v1
+// @Summary Add product to cart
+// @Description Add product to cart
+// @Accept json
+// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
+// @Param message body models.AddCartRequest true "Add to Cart Request"
+// @Produce json
+// @Success 201 {object} models.MessageResponse
+// @Success 400 {object} models.ErrorResponse
+// @Success 404 {object} models.ErrorResponse
+// @Success 500 {object} models.ErrorResponse
+// @Router /carts [post]
 func AddCart(w http.ResponseWriter, r *http.Request) {
 	var body models.AddCartRequest
 	if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
@@ -89,6 +114,19 @@ func AddCart(w http.ResponseWriter, r *http.Request) {
 	utils.SendJsonSuccess(w, map[string]interface{}{"message": "succcessfully add product to shopping cart"}, http.StatusCreated)
 }
 
+// Delete product in cart
+// @Tags carts v1
+// @Summary Delete product in cart
+// @Description Delete product in cart
+// @Accept json
+// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
+// @Param product_id path int true "Product ID"
+// @Produce json
+// @Success 201 {object} models.MessageResponse
+// @Success 400 {object} models.ErrorResponse
+// @Success 404 {object} models.ErrorResponse
+// @Success 500 {object} models.ErrorResponse
+// @Router /carts/{product_id} [delete]
 func DeleteCart(w http.ResponseWriter, r *http.Request) {
 	userId, err := utils.GetJwtClaim(r)
 	if err != nil {

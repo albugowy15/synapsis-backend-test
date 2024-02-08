@@ -1,5 +1,65 @@
 basePath: /v1
 definitions:
+  models.AddCartRequest:
+    properties:
+      product_id:
+        type: integer
+      quantity:
+        type: integer
+    type: object
+  models.ArrayResponse:
+    properties:
+      data: {}
+      total_items:
+        type: integer
+    type: object
+  models.CheckoutRequest:
+    properties:
+      payment_method:
+        type: integer
+    type: object
+  models.ErrorResponse:
+    properties:
+      error:
+        type: string
+    type: object
+  models.MessageResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  models.PaymentMethod:
+    properties:
+      fee:
+        type: number
+      id:
+        type: integer
+      metchant:
+        type: string
+      type:
+        type: string
+    type: object
+  models.PaymentTransactionDetailSwagger:
+    properties:
+      account_number:
+        type: string
+      id:
+        type: string
+      payment_method:
+        $ref: '#/definitions/models.PaymentMethod'
+      qr_code:
+        type: string
+      status:
+        type: string
+      tax:
+        type: number
+      total_price:
+        type: number
+      total_product_price:
+        type: number
+      virtual_account:
+        type: string
+    type: object
   models.Product:
     properties:
       description:
@@ -13,10 +73,28 @@ definitions:
       stock:
         type: integer
     type: object
-  models.UserRegisterResponse:
+  models.TokenResponse:
     properties:
-      id:
-        type: integer
+      token:
+        type: string
+    type: object
+  models.UserLoginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  models.UserRegisterRequest:
+    properties:
+      email:
+        type: string
+      fullname:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
     type: object
 host: localhost:8080
 info:
@@ -32,23 +110,226 @@ info:
   title: Swagger Example API
   version: "1.0"
 paths:
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      description: User login with username and password
+      parameters:
+      - description: Login Request
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserLoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TokenResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: User login
+      tags:
+      - auth v1
   /auth/register:
     post:
       consumes:
       - application/json
       description: Register a new user
+      parameters:
+      - description: Register request
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserRegisterRequest'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            items:
-              $ref: '#/definitions/models.UserRegisterResponse'
-            type: array
+            $ref: '#/definitions/models.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
       summary: Register user
       tags:
       - auth v1
+  /carts:
+    get:
+      consumes:
+      - application/json
+      description: Get all products in cart
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert your access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.ArrayResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get all products in cart
+      tags:
+      - carts v1
+    post:
+      consumes:
+      - application/json
+      description: Add product to cart
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert your access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Add to Cart Request
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/models.AddCartRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Add product to cart
+      tags:
+      - carts v1
+  /carts/{product_id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete product in cart
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert your access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Product ID
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Delete product in cart
+      tags:
+      - carts v1
+  /carts/checkout:
+    post:
+      consumes:
+      - application/json
+      description: Checkout all product in cart and create transaction
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert your access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: choouse payment method when checkout
+        in: body
+        name: message
+        required: true
+        schema:
+          $ref: '#/definitions/models.CheckoutRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.MessageResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Checkout cart
+      tags:
+      - carts v1
   /products:
     get:
       consumes:
@@ -63,7 +344,96 @@ paths:
             items:
               $ref: '#/definitions/models.Product'
             type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
       summary: Get all products information of filter with category
       tags:
       - products v1
+  /transactions:
+    get:
+      consumes:
+      - application/json
+      description: Get all user transactions
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert your access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.ArrayResponse'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get all user transactions
+      tags:
+      - transactions v1
+  /transactions/{transaction_id}:
+    get:
+      consumes:
+      - application/json
+      description: Get transactions detail
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert your access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Transaction ID
+        in: path
+        name: transaction_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.PaymentTransactionDetailSwagger'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.ErrorResponse'
+      summary: Get transactions detail
+      tags:
+      - transactions v1
 swagger: "2.0"

@@ -1,6 +1,7 @@
 package repositories
 
 import (
+	"database/sql"
 	"fmt"
 	"log"
 
@@ -59,17 +60,20 @@ func (r *PaymentTransactionRepository) Add(userId int64, paymentMethodId int) er
 		log.Fatal("Error starting transaction", err)
 	}
 
-	var qrCode *string = nil
+	var qrCode sql.NullString
 	if paymentMethod.Type == "QRIS" {
-		qrCode = &QRCode
+		qrCode.Valid = true
+		qrCode.String = QRCode
 	}
-	var vaNumber *string = nil
+	var vaNumber sql.NullString
 	if paymentMethod.Type == "VA_TRANSFER" {
-		vaNumber = &VANumber
+		vaNumber.Valid = true
+		vaNumber.String = VANumber
 	}
-	var accountNumber *string = nil
+	var accountNumber sql.NullString
 	if paymentMethod.Type == "MANUAL_TRANSFER" {
-		accountNumber = &AccountNumber
+		accountNumber.Valid = true
+		accountNumber.String = AccountNumber
 	}
 
 	_, err = tx.Exec(`

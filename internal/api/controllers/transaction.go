@@ -12,6 +12,18 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+// Get All User Transactions
+// @Tags transactions v1
+// @Summary Get all user transactions
+// @Description Get all user transactions
+// @Accept json
+// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
+// @Produce json
+// @Success 200 {array} models.ArrayResponse
+// @Success 400 {object} models.ErrorResponse
+// @Success 404 {object} models.ErrorResponse
+// @Success 500 {object} models.ErrorResponse
+// @Router /transactions [get]
 func GetTransactions(w http.ResponseWriter, r *http.Request) {
 	userId, err := utils.GetJwtClaim(r)
 	if err != nil {
@@ -37,6 +49,19 @@ func GetTransactions(w http.ResponseWriter, r *http.Request) {
 	utils.SendJsonSuccess(w, response, http.StatusOK)
 }
 
+// Get Transaction Detail
+// @Tags transactions v1
+// @Summary Get transactions detail
+// @Description Get transactions detail
+// @Accept json
+// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
+// @Param transaction_id path int true "Transaction ID"
+// @Produce json
+// @Success 200 {array} models.PaymentTransactionDetailSwagger
+// @Success 400 {object} models.ErrorResponse
+// @Success 404 {object} models.ErrorResponse
+// @Success 500 {object} models.ErrorResponse
+// @Router /transactions/{transaction_id} [get]
 func GetTransactionById(w http.ResponseWriter, r *http.Request) {
 	userId, err := utils.GetJwtClaim(r)
 	if err != nil {
