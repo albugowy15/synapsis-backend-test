@@ -1,52 +1,8 @@
 # Synapsis Backend Test
 
-## Available Endpoints
-
-### GET `/v1/products`
-
-**Description:** Retrieve a list of all available products.
-
-**Usage:** Use this endpoint to fetch a list of all products offered by the API.
-
-### POST `/v1/auth/login`
-
-**Description:** Authenticate users using their username and password. Upon successful authentication, the server responds with a JSON Web Token (JWT) for further access.
-
-**Usage:** Use this endpoint to log in to the system and obtain a JWT token for subsequent authenticated requests.
-
-### POST `/v1/auth/register`
-
-**Description:** Register a new user with the system using their username, email, full name, and password.
-
-**Usage:** Use this endpoint to create a new user account in the system.
-
-### GET `/v1/carts`
-
-**Description:** Retrieve all products currently in the user's shopping cart.
-
-**Authentication:** Requires authentication using a JWT token.
-
-**Usage:** Use this endpoint to view the contents of the shopping cart.
-
-### POST `/v1/carts`
-
-**Description:** Add a product to the user's shopping cart.
-
-**Authentication:** Requires authentication using a JWT token.
-
-**Usage:** Use this endpoint to add a product to the user's shopping cart.
-
-### POST `/v1/carts/checkout`
-
-**Description:** Checkout all products currently in the user's shopping cart.
-
-**Authentication:** Requires authentication using a JWT token.
-
-**Usage:** Use this endpoint to complete the checkout process for all products in the shopping cart.
-
 ## Documentation
 
-For more detailed documentation on each endpoint, including request and response formats, refer to the [Swagger documentation](https://https://synapsis-backend-test.fly.dev/swagger/index.html) provided by the API.
+For more detailed documentation on each endpoint, including request and response formats, refer to the [Swagger documentation](https://synapsis-backend-test.fly.dev/swagger/index.html) provided by the API.
 
 ## How To Run
 
@@ -112,6 +68,16 @@ make build_api
 ```sh
 make server_api
 ```
+
+## Seeder Data
+Inside `database/seeder` directory, you'll find database seeder files. These files contain data to populate the database. To test the protected endpoint easily, select a username from the user seeder file. You can use the password `password1for&All` for all usernames. For example:
+```json
+{
+  "username": "angeloschmitt",
+  "password": "password1for&All"
+}
+```
+Use above credentials to Login.
 
 ## Database Schema
 
