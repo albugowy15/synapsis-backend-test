@@ -46,7 +46,7 @@
 
 ## Documentation
 
-For more detailed documentation on each endpoint, including request and response formats, refer to the Swagger documentation provided by the API.
+For more detailed documentation on each endpoint, including request and response formats, refer to the [Swagger documentation](https://https://synapsis-backend-test.fly.dev/swagger/index.html) provided by the API.
 
 ## How To Run
 
@@ -118,3 +118,11 @@ make server_api
 ![Database Schema](./synapsis-backend-test.png)
 
 With dbdiagram.io => https://dbdocs.io/kholidbughowi/synapsis-backend-test-database?view=relationships
+
+## Deployment
+
+This project has been deployed on the [Fly.io](https://fly.io/) platform, which offers reliable deployment services. It utilizes [Neon DB](https://neon.tech/) as its database solution to effectively manage and store data.
+
+## Docker Image
+
+Feel free to retrieve the Docker image from the following repository: https://hub.docker.com/r/albugowy15/synapsis-backend-test. This image is readily available for pulling and utilization within your environment.
